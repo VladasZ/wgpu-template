@@ -29,6 +29,12 @@ impl App {
         }
     }
 
+    fn request_redraw(&mut self) {
+        if let State::Ready(gfx) = &mut self.state {
+            gfx.request_redraw();
+        }
+    }
+
     fn resized(&mut self, size: PhysicalSize<u32>) {
         if let State::Ready(gfx) = &mut self.state {
             gfx.resize(size);
@@ -70,6 +76,7 @@ impl ApplicationHandler<Graphics> for App {
 
     fn user_event(&mut self, _event_loop: &ActiveEventLoop, graphics: Graphics) {
         self.state = State::Ready(graphics);
+        self.request_redraw();
     }
 
     fn window_event(
